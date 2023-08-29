@@ -28,11 +28,25 @@ app.use("/api/messages", messageRoutes);
 const server = app.listen(process.env.PORT||6060, () =>
   console.log(`Server started on ${process.env.PORT}`)
 );
-const io = socket(server, {
-  cors: {
-    origin: `https://chat-backend-7pkn.onrender.com:${process.env.PORT}`,
-    credentials: true,
-  },
+const ioPromise = new Promise((resolve, reject) => {
+  const io = socket(server, {
+    cors: {
+      origin: `https://chat-backend-7pkn.onrender.com:${process.env.PORT}`,
+      credentials: true,
+    },
+  });
+
+  io.on('connect', () => {
+    resolve(io);
+  });
+
+  io.on('connect_error', (error) => {
+    reject(error);
+  });
+});
+
+ioPromise.catch((error) => {
+  console.error('Socket connection error:', error);
 });
 
 global.onlineUsers = new Map();
