@@ -30,7 +30,7 @@ const server = app.listen(process.env.PORT||6060, () =>
 );
 const io = socket(server, {
   cors: {
-    origin: "https://chat-backend-7pkn.onrender.com",
+    origin: `https://chat-backend-7pkn.onrender.com:${packagerocess.env.PORT}`,
     credentials: true,
   },
 });
