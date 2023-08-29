@@ -29,11 +29,12 @@ const server = app.listen(process.env.PORT||6060, () =>
   console.log(`Server started on ${process.env.PORT}`)
 );
 const ioPromise = new Promise((resolve, reject) => {
-  const io = socket(server, {
-    cors: {
-      origin: `https://chat-backend-7pkn.onrender.com:${process.env.PORT}`,
-      credentials: true,
-    },
+  
+    const io = socket(server, {
+      cors: {
+        origin: "https://chatapp-rawat.netlify.app", // Replace this with your client's origin
+        credentials: true,
+      },
   });
 
   io.on('connect', () => {
